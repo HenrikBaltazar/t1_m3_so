@@ -56,16 +56,17 @@ void vReceiverTaskLED_Amarelo(void *pv) {
         if (xQueueReceive(queueBtn1, &evt, intervaloTicks) == pdPASS) {
             unsigned long delta = (evt.timestamp - lastTimePressed) / 1000;
             lastTimePressed = evt.timestamp;
-
-            Serial.print("[AMARELO] Botao 1 pressionado. Tempo decorrido: ");
-            Serial.print(delta);
-            Serial.println(" s");
-
+            Serial.print("[AMARELO ");
             if (intervaloTicks == pdMS_TO_TICKS(AMARELO_T1)) {
                 intervaloTicks = pdMS_TO_TICKS(AMARELO_T2);
+                Serial.print(AMARELO_T2);
             } else {
                 intervaloTicks = pdMS_TO_TICKS(AMARELO_T1);
+                Serial.print(AMARELO_T1);
             }
+            Serial.print("ms] Botao 1 pressionado. Tempo decorrido: ");
+            Serial.print(delta);
+            Serial.println("s");
         } else {
             ledState = !ledState;
             digitalWrite(LED_AMARELO, ledState ? HIGH : LOW);
@@ -84,16 +85,17 @@ void vReceiverTaskLED_Verde(void *pv) {
         if (xQueueReceive(queueBtn2, &evt, intervaloTicks) == pdPASS) {
             unsigned long delta = (evt.timestamp - lastTimePressed) / 1000;
             lastTimePressed = evt.timestamp;
-
-            Serial.print("[VERDE] Botao 2 pressionado. Tempo decorrido: ");
-            Serial.print(delta);
-            Serial.println(" s");
-
+            Serial.print("[VERDE ");
             if (intervaloTicks == pdMS_TO_TICKS(VERDE_T1)) {
                 intervaloTicks = pdMS_TO_TICKS(VERDE_T2);
+                Serial.print(VERDE_T2);
             } else {
                 intervaloTicks = pdMS_TO_TICKS(VERDE_T1);
+                Serial.print(VERDE_T1);
             }
+            Serial.print("ms] Botao 2 pressionado. Tempo decorrido: ");
+            Serial.print(delta);
+            Serial.println("s");
         } else {
             ledState = !ledState;
             digitalWrite(LED_VERDE, ledState ? HIGH : LOW);

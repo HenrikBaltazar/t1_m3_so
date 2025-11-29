@@ -1,7 +1,15 @@
 # T1 M3 SO
-
-## CMD
+Henrik Baltazar
+## Execução
+Utilizado `platformio` para compilar para arduino uno e a extensão oficial do `wokwi` para `vscode` (velocidade de compilação otimizada, não é necessário aguardar na fila dos servidores wokwi)
+### Build
 `pio run`
+### Simulação
+Wokwi simulator para Visual Studio Code ou acessar o [projeto público](https://wokwi.com/projects/448982735703797761) ou opcionalmente copiar `src/main.cpp`, `diagram.json` e `libraries.txt` para um novo projeto no portal online `wokwi`.
+
+## Solução proposta
+A solução proposta se dá através de 3 tarefas (uma para cada LED), 2 interrupções (uma para cada botam, anexada a tarefa de seu respectivo LED) e 2 filas (uma para cada botão). As tarefas de LED controlável carregam o intervalo de ticks com `TickType_t` inicial convertendo de ms para ticks do FreeRTOS, possuem um loop infinito próprio e aguarda a fila de seu respectivo botão com `xQueueReceive` que assimila o botão e limpa-o da fila ao aceita-lo, enquanto o botão não é pressionado a tarefa permanecerá alternando o estado do LED, quando a fila é preenchida com o pressionamento do botão, a tarefa irá registrar o tempo decorrido e verificar qual seu intervalo de tick atual para alternar para o outro estado, assim, quando o loop retomar e a fila estiver limpa o led alternará o estado com o tick atualizado.
+
 
 ## Task
 ```
